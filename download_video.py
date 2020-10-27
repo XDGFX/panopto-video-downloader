@@ -19,17 +19,43 @@ XDGFX, 2020
 import requests
 import os
 
-number_files = 3
 base_url = "https://d2hpwsdp0ihr0w.cloudfront.net/sessions/4029695e-a2d4-4157-9ecc-95bdbafd37a7/192e2a31-4b88-424a-8880372e253-65e6-4a69-8414-586e192067ce.hls/186542/"
+filename = "video_file.ts"
 
-for n in range(0, number_files + 1):
+media = True
+n = 0
+
+
+def stream_complete():
+    """
+    End program when file is finished downloading.
+    """
+    print("Stream is complete!")
+    print("Exiting now")
+    raise SystemExit
+
+
+# Remove any existing media file
+with open(filename, "w") as f:
+    print("Removed any existing file")
+
+while media:
     print(f"Downloading file number {n}")
     url = f"{base_url}{n:05}.ts"
 
-    with open("video_file.ts", "ab") as f:
+    with open(filename, "ab") as f:
         response = requests.get(url, stream=True)
-        for block in response.iter_content(1024):
-            if not block:
-                break
 
-            f.write(block)
+        if response.status_code != 200:
+            stream_complete()
+
+        try:
+            for block in response.iter_content(1024):
+                if not block:
+                    break
+
+                f.write(block)
+
+            n += 1
+        except requests.exceptions.StreamConsumedError as e:
+            stream_complete()
