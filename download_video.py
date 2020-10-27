@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """
 Panopto Video Downloader v1
 Downloads videos from Panopto as a .ts stream.
@@ -11,7 +13,7 @@ How to use:
 6. Replace that url in base_url below.
 7. Run this file!
 
-XDGFX
+XDGFX, 2020
 """
 
 import requests
