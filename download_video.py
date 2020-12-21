@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Panopto Video Downloader v1
+Panopto Video Downloader
 Downloads videos from Panopto as a .ts stream.
 
 How to use:
@@ -10,17 +10,26 @@ How to use:
 3. Refresh the page, select the 'media' filter, and play the video.
 4. Look for files e.g. 00000.ts, 00001.ts. Double click on one.
 5. Copy the url you are taken to, and remove the trailing '#####.ts'
-6. Replace that url in base_url below.
-7. Run this file!
+6. Run download_video.py with the url as the video parameter.
+7. Optionally specify the filename with -n "FILENAME.ts".
 
 XDGFX, 2020
 """
 
-import requests
+import argparse
 import os
 
-base_url = "https://d2hpwsdp0ihr0w.cloudfront.net/sessions/4029695e-a2d4-4157-9ecc-95bdbafd37a7/192e2a31-4b88-424a-8880372e253-65e6-4a69-8414-586e192067ce.hls/186542/"
-filename = "video_file.ts"
+import requests
+
+parser = argparse.ArgumentParser(description='Download videos from Panopto')
+parser.add_argument('url', type=str, help='the video url')
+parser.add_argument('-n', dest='filename', type=str,
+                    help='optional filename')
+
+args = parser.parse_args()
+
+base_url = args.url.rstrip("/") + "/"
+filename = (args.filename or "video_file.ts").rstrip(".ts") + ".ts"
 
 media = True
 n = 0

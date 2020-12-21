@@ -11,5 +11,5 @@
 3. Refresh the page, select the 'media' filter, and play the video.
 4. Look for files e.g. 00000.ts, 00001.ts. Double click on one.
 5. Copy the url you are taken to, and remove the trailing '#####.ts'
-6. Replace that url in base_url below.
-7. Run `download_video.py`!
+6. Run download_video.py with the url as the video parameter.
+7. Optionally specify the filename with -n "FILENAME.ts".

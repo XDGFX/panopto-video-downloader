@@ -1,1 +1,3 @@
-video_file.ts
+*.ts
+.vscode/
+.venv/
